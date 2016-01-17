@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+import questions
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -14,5 +15,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^survey/$', 'questions.views.index'),
+    url(r'^survey/$', 'questions.views.index', name='index'),
+    url(r'^survey/2/(?P<person>.+)/$', 'questions.views.page_two', name='page_two'),
 )
