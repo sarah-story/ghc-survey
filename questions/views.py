@@ -15,7 +15,8 @@ def index(request):
             person.zip = data.get('zip')
             person.status = data.get('status')
             person.save()
-            return redirect('page_two', person=person)
+            request.session['current_person'] = person
+            return redirect('page_two')
     else:
         form = forms.PrelimQuestions()
     return render(request, 'page_one.html', {
@@ -23,13 +24,57 @@ def index(request):
     })
 
 
-def page_two(request, person):
-    return HttpResponse(person.street_address)
+def page_two(request):
+    person = request.session.get('current_person', None)
+    if person is None:
+        return redirect("index")
+    else:
+        if request.method == 'POST':
+            form = forms.ParticipantQuestions(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                person.ghc_rating = data['rate_ghc'] or -1
+                person.ghc_impact = data['ghc_impact'] or -1
+                person.ghc_involvement = data['ghc_involvement'] or ""
+                person.target_involvement = data['desired_involvement'] or ""
+                person.want_community_events = data['community_event_interest'] or ""
+                person.religious_similarity = data['religious_similarity'] or ""
+                person.religion = data['religious_identification'] or ""
+                person.age_range = data['age_range'] or ""
+                person.race = data['race_ethnicity'] or ""
+                person.gender = data['gender'] or ""
 
-
-def success(request):
-    return
+                person.save()
+                request.session['current_person'] = person
+                return redirect('page_three')
+        else:
+            form = forms.ParticipantQuestions()
+        return render(request, 'page_two.html', {
+            'form': form,
+    })
 
 
 def page_three(request):
-    return
+    person = request.session.get('current_person', None)
+    if person is None:
+        return redirect("index")
+    else:
+        if request.method == 'POST':
+            form = forms.FollowUpQuestions(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                person.followup = data['follow_up'] or ""
+                person.witnessed_to = data['witnessed_to'] or ""
+                person.contact_info = data['contact_info'] or ""
+
+                person.save()
+                return redirect('success')
+        else:
+            form = forms.FollowUpQuestions()
+        return render(request, 'page_three.html', {
+            'form': form,
+        })
+
+
+def success(request):
+    return render(request, 'success.html')
