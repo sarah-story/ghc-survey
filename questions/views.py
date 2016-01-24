@@ -3,6 +3,8 @@ from models import Person
 import forms
 
 
+
+
 def index(request):
     if request.method == 'POST':
         form = forms.PrelimQuestions(request.POST)
@@ -14,7 +16,7 @@ def index(request):
             person.zip = data.get('zip')
             person.status = data.get('status')
             person.save()
-            if person.status != "Willing to Participate":
+            if person.status != forms.WILLING_TO_PARTICIPATE:
                 return redirect('success')
             else:
                 request.session['current_person'] = person
@@ -106,6 +108,7 @@ def contact(request):
         return render(request, 'contact_info.html', {
             'form': form,
         })
+
 
 def success(request):
     request.session.flush()
