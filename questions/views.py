@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from models import Person
 import forms
+
+
 
 
 def index(request):
@@ -15,8 +16,11 @@ def index(request):
             person.zip = data.get('zip')
             person.status = data.get('status')
             person.save()
-            request.session['current_person'] = person
-            return redirect('page_two')
+            if person.status != forms.WILLING_TO_PARTICIPATE:
+                return redirect('success')
+            else:
+                request.session['current_person'] = person
+                return redirect('page_two')
     else:
         form = forms.PrelimQuestions()
     return render(request, 'page_one.html', {
@@ -75,7 +79,7 @@ def page_three(request):
                 person.witnessed_to = data['witnessed_to'] or ""
                 person.save()
 
-                if person.witnessed_to == "later":
+                if person.followup == "yes" and person.witnessed_to == "later":
                     return redirect('contact')
                 else:
                     return redirect('success')
@@ -104,6 +108,7 @@ def contact(request):
         return render(request, 'contact_info.html', {
             'form': form,
         })
+
 
 def success(request):
     request.session.flush()

@@ -1,8 +1,8 @@
 from django import forms
-from django.utils.safestring import mark_safe
 
-STATUS_OPTIONS = (("", "None Selected"),
-                  ("Willing to Participate", 'Willing to Participate'),
+WILLING_TO_PARTICIPATE = "Willing to Participate"
+
+STATUS_OPTIONS = ((WILLING_TO_PARTICIPATE, WILLING_TO_PARTICIPATE),
                   ("Not Willing to Participate", 'Not Willing to Participate'),
                   ('Not Home', 'Not Home'))
 
@@ -73,7 +73,11 @@ class PrelimQuestions(forms.Form):
     street_address = forms.CharField(max_length=100)
     city = forms.CharField(max_length=50)
     zip = forms.IntegerField()
-    status = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}), choices=STATUS_OPTIONS)
+    status = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        choices=STATUS_OPTIONS,
+        label="The resident is:"
+    )
 
 
 class ParticipantQuestions(forms.Form):
