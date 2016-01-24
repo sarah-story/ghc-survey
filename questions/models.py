@@ -20,6 +20,7 @@ class Person(models.Model):
 
     followup = models.CharField(max_length=3, null=True, blank=True)
     witnessed_to = models.CharField(max_length=10, null=True, blank=True)
+    contact_type = models.CharField(max_length=50, null=True, blank=True)
     contact_info = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):

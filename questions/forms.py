@@ -68,11 +68,15 @@ GENDER = (("", "None Selected"),
           ("Female", "Female"),
           ("prefer to not disclose", "prefer to not disclose"))
 
+CONTACT_TYPE = (("", "None Selected"),
+                ("email", "Email"),
+                ("phone", "Phone"))
+
 
 class PrelimQuestions(forms.Form):
-    street_address = forms.CharField(max_length=100)
-    city = forms.CharField(max_length=50)
-    zip = forms.IntegerField()
+    street_address = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}), max_length=100)
+    city = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}), max_length=50)
+    zip = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control'}))
     status = forms.ChoiceField(
         widget=forms.Select(attrs={'class': 'form-control'}),
         choices=STATUS_OPTIONS,
@@ -171,4 +175,15 @@ class FollowUpQuestions(forms.Form):
 
 class ContactInfo(forms.Form):
 
-    contact_info = forms.CharField(max_length=50, required=False)
+    contact_type = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        choices=CONTACT_TYPE,
+        label="What's the best way to contact you?",
+        required=False
+    )
+
+    contact_info = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        max_length=50,
+        required=False
+    )

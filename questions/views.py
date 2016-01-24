@@ -100,6 +100,7 @@ def contact(request):
             if form.is_valid():
                 data = form.cleaned_data
                 person.contact_info = data['contact_info'] or ""
+                person.contact_type = data['contact_type'] or ""
                 person.save()
                 return redirect('success')
 

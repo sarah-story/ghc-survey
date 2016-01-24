@@ -1,12 +1,20 @@
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 </head>
 <body>
     <div class="container">
-        <form action="/survey/" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input class="btn" type="submit" value="Continue" />
-        </form>
+        <div class="col-md-12" style="text-align: center; margin: 20px; height: 20%;">
+            <img style="height: 100%" src="http://greenhillschurch.org/wp-content/themes/green-hills-church-theme/img/green-hills-church@2x.png">
+        </div>
+        <div class="col-md-6 col-md-offset-3">
+            <form action="/survey/" method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <div style="text-align: center">
+                <input style="background-color: #319BB4; color: white;" class="btn btn-lg" type="submit" value="Continue" />
+            </div>
+            </form>
+        </div>
     </div>
 </body>
