@@ -46,12 +46,20 @@ def page_two(request):
 
                 person.save()
                 request.session['current_person'] = person
-                return redirect('page_three')
+                return redirect('done')
         else:
             form = forms.ParticipantQuestions()
         return render(request, 'page_two.html', {
             'form': form,
     })
+
+
+def done(request):
+    person = request.session.get('current_person', None)
+    if person is None:
+        return redirect("index")
+    else:
+        return render(request, 'user_complete.html')
 
 
 def page_three(request):
@@ -65,10 +73,12 @@ def page_three(request):
                 data = form.cleaned_data
                 person.followup = data['follow_up'] or ""
                 person.witnessed_to = data['witnessed_to'] or ""
-                person.contact_info = data['contact_info'] or ""
-
                 person.save()
-                return redirect('success')
+
+                if person.witnessed_to == "later":
+                    return redirect('contact')
+                else:
+                    return redirect('success')
         else:
             form = forms.FollowUpQuestions()
         return render(request, 'page_three.html', {
@@ -76,5 +86,25 @@ def page_three(request):
         })
 
 
+def contact(request):
+    person = request.session.get('current_person', None)
+    if person is None:
+        return redirect("index")
+    else:
+        if request.method == 'POST':
+            form = forms.ContactInfo(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                person.contact_info = data['contact_info'] or ""
+                person.save()
+                return redirect('success')
+
+        else:
+            form = forms.ContactInfo
+        return render(request, 'contact_info.html', {
+            'form': form,
+        })
+
 def success(request):
+    request.session.flush()
     return render(request, 'success.html')

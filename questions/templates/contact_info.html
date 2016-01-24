@@ -1,0 +1,21 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+</head>
+<body style="background-color: #F8FAFB; color: #6A6A6A">
+    <nav class="navbar navbar-default navbar-static-top" style="background-color: #7DA200 !important;">
+      <div class="container">
+      </div>
+    </nav>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <form action="/survey/contact/" method="post">{% csrf_token %}
+            {{ form.as_p }}
+                <div style="text-align: center">
+                    <input class="btn btn-lg" type="submit" value="Continue" />
+                </div>
+            </form>
+        </div>
+    </div>
+</body>

@@ -165,4 +165,6 @@ class FollowUpQuestions(forms.Form):
         required=False
     )
 
+class ContactInfo(forms.Form):
+
     contact_info = forms.CharField(max_length=50, required=False)
