@@ -180,6 +180,7 @@ class FollowUpQuestions(forms.Form):
         required=False
     )
 
+
 class ContactInfo(forms.Form):
 
     contact_type = forms.ChoiceField(
@@ -193,4 +194,13 @@ class ContactInfo(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control'}),
         max_length=50,
         required=False
+    )
+
+
+class Notes(forms.Form):
+    notes = forms.CharField(
+        widget=forms.Textarea(attrs={'class':'form-control'}),
+        label="Notes",
+        required=False,
+        max_length=500
     )

@@ -24,5 +24,7 @@ class Person(models.Model):
     contact_type = models.CharField(max_length=50, null=True, blank=True)
     contact_info = models.CharField(max_length=50, null=True, blank=True)
 
+    notes = models.CharField(max_length=500, null=True, blank=True)
+
     def __str__(self):
         return self.street_address

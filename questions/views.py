@@ -83,7 +83,7 @@ def page_three(request):
                 if person.followup == "yes" and person.witnessed_to == "later":
                     return redirect('contact')
                 else:
-                    return redirect('success')
+                    return redirect('notes')
         else:
             form = forms.FollowUpQuestions()
         return render(request, 'page_three.html', {
@@ -103,11 +103,30 @@ def contact(request):
                 person.contact_info = data['contact_info'] or ""
                 person.contact_type = data['contact_type'] or ""
                 person.save()
-                return redirect('success')
+                return redirect('notes')
 
         else:
             form = forms.ContactInfo
         return render(request, 'contact_info.html', {
+            'form': form,
+        })
+
+
+def notes(request):
+    person = request.session.get('current_person', None)
+    if person is None:
+        return redirect("index")
+    else:
+        if request.method == 'POST':
+            form = forms.Notes(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                person.notes = data['notes'] or ""
+                person.save()
+                return redirect('success')
+        else:
+            form = forms.Notes
+        return render(request, 'notes.html', {
             'form': form,
         })
 
