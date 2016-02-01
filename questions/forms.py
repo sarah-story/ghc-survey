@@ -7,11 +7,11 @@ STATUS_OPTIONS = ((WILLING_TO_PARTICIPATE, WILLING_TO_PARTICIPATE),
                   ('Not Home', 'Not Home'))
 
 RATE_1_TO_5 = ((-1, "None Selected"),
-               (1,1),
+               (1,"1 - Poor"),
                (2,2),
                (3,3),
                (4,4),
-               (5,5))
+               (5,"5 - Excellent"))
 
 INVOLVEMENT = (("", "None Selected"),
                ("not involved","not involved"),
@@ -31,7 +31,7 @@ NOW_LATER = (("", "None Selected"),
 SIMILARITY = (("", "None Selected"),
               ("very different", "very different"),
               ("different", "different"),
-              ("unsure","unsure"),
+              ("somewhat different","somewhat different"),
               ("similar", "similar"),
               ("very similar", "very similar"))
 
@@ -118,6 +118,13 @@ class ParticipantQuestions(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control'}),
         choices=YES_NO,
         label="Would you be interested in attending community events held at GHC?",
+        required=False
+    )
+
+    religious_knowledge = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        choices=YES_NO,
+        label="Do you know what GHC's core religious beliefs are?",
         required=False
     )
 

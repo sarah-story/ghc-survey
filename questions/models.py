@@ -12,6 +12,7 @@ class Person(models.Model):
     ghc_involvement = models.CharField(max_length=25, null=True, blank=True)
     target_involvement = models.CharField(max_length=25, null=True, blank=True)
     want_community_events = models.CharField(max_length=3, null=True, blank=True)
+    religious_knowledge = models.CharField(max_length=3, null=True, blank=True)
     religious_similarity = models.CharField(max_length=25, null=True, blank=True)
     religion = models.CharField(max_length=25, null=True, blank=True)
     age_range = models.CharField(max_length=25, null=True, blank=True)

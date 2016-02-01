@@ -42,6 +42,7 @@ def page_two(request):
                 person.ghc_involvement = data['ghc_involvement'] or ""
                 person.target_involvement = data['desired_involvement'] or ""
                 person.want_community_events = data['community_event_interest'] or ""
+                person.religious_knowledge = data['religious_knowledge'] or ""
                 person.religious_similarity = data['religious_similarity'] or ""
                 person.religion = data['religious_identification'] or ""
                 person.age_range = data['age_range'] or ""
