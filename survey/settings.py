@@ -8,7 +8,7 @@ TEMPLATE_DEBUG = DEBUG
 APPEND_SLASH=False
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Sean', 'sean.j.story@gmail.com'),
 )
 
 MANAGERS = ADMINS
