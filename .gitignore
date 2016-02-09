@@ -1,6 +1,6 @@
 #heroku reccommended
 *.pyc
-staticfiles
+staticfiles/*
 .env
 
 # Byte-compiled / optimized / DLL files
