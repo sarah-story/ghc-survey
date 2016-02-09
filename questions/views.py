@@ -79,7 +79,7 @@ def page_three(request):
                 person.followup = data['follow_up'] or ""
                 person.witnessed_to = data['witnessed_to'] or ""
                 person.save()
-
+                request.session['current_person'] = person
                 if person.followup == "yes" and person.witnessed_to == "later":
                     return redirect('contact')
                 else:
@@ -103,6 +103,7 @@ def contact(request):
                 person.contact_info = data['contact_info'] or ""
                 person.contact_type = data['contact_type'] or ""
                 person.save()
+                request.session['current_person'] = person
                 return redirect('notes')
 
         else:
@@ -123,6 +124,7 @@ def notes(request):
                 data = form.cleaned_data
                 person.notes = data['notes'] or ""
                 person.save()
+                request.session['current_person'] = person
                 return redirect('success')
         else:
             form = forms.Notes
