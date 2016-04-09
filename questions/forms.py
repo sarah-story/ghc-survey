@@ -74,9 +74,12 @@ CONTACT_TYPE = (("", "None Selected"),
 
 
 class PrelimQuestions(forms.Form):
-    street_address = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}), max_length=100)
-    city = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}), max_length=50)
-    zip = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    street_address = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control', 'placeholder': 'e.g. 101 Bowling'
+    }), max_length=100, label="Street Address (don't include Drive, Ave, etc.):")
+
+
+class StatusQuestions(forms.Form):
     status = forms.ChoiceField(
         widget=forms.Select(attrs={'class': 'form-control'}),
         choices=STATUS_OPTIONS,

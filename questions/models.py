@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Person(models.Model):
+
+    people = models.Manager()
+
     street_address = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     zip = models.IntegerField()

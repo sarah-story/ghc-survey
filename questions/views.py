@@ -11,21 +11,53 @@ def index(request):
         if form.is_valid():
             data = form.cleaned_data
             person = Person()
-            person.street_address = data.get('street_address')
-            person.city = data.get('city')
-            person.zip = data.get('zip')
-            person.status = data.get('status')
-            person.save()
-            if person.status != forms.WILLING_TO_PARTICIPATE:
-                return redirect('success')
-            else:
-                request.session['current_person'] = person
-                return redirect('page_two')
+            person.street_address = " ".join(data.get('street_address').lower().split())
+            person.city = "Nashville"
+            person.zip = 37205
+            request.session['current_person'] = person
+            return redirect('address_visited')
     else:
         form = forms.PrelimQuestions()
     return render(request, 'page_one.html', {
         'form': form,
     })
+
+
+def address_visited(request):
+    person = request.session.get('current_person', None)
+    if person is None:
+        return redirect('index')
+    else:
+        at_this_address = Person.people.filter(street_address=" ".join(person.street_address.lower().split()))
+        if len(at_this_address) > 0:
+            return render(request, 'address_visited.html', {})
+        else:
+            request.session['current_person'] = person
+            return redirect('status')
+
+
+def status(request):
+    person = request.session.get('current_person', None)
+    if person is None:
+        return redirect("index")
+    else:
+        if request.method == 'POST':
+            form = forms.StatusQuestions(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                person.status = data['status']
+                if person.status != "Not Home":
+                    person.save()
+                request.session['current_person'] = person
+                if person.status != forms.WILLING_TO_PARTICIPATE:
+                    print('redirect')
+                    return redirect('success')
+                return redirect('page_two')
+        else:
+            form = forms.StatusQuestions()
+            return render(request, 'status.html', {
+                'form': form
+            })
 
 
 def page_two(request):

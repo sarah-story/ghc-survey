@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
-from django.contrib import admin
 
+# Uncomment the next two lines to enable the admin:
+from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -11,6 +12,8 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'questions.views.index', name='index'),
     url(r'^survey/$', 'questions.views.index', name='index'),
+    url(r'^survey/address', 'questions.views.address_visited', name='address_visited'),
+    url(r'^survey/status', 'questions.views.status', name='status'),
     url(r'^survey/2', 'questions.views.page_two', name='page_two'),
     url(r'^survey/done', 'questions.views.done', name='done'),
     url(r'^survey/3', 'questions.views.page_three', name='page_three'),
