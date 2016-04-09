@@ -7,11 +7,11 @@ STATUS_OPTIONS = ((WILLING_TO_PARTICIPATE, WILLING_TO_PARTICIPATE),
                   ('Not Home', 'Not Home'))
 
 RATE_1_TO_5 = ((-1, "None Selected"),
-               (1,1),
+               (1,"1 - Poor"),
                (2,2),
                (3,3),
                (4,4),
-               (5,5))
+               (5,"5 - Excellent"))
 
 INVOLVEMENT = (("", "None Selected"),
                ("not involved","not involved"),
@@ -31,7 +31,7 @@ NOW_LATER = (("", "None Selected"),
 SIMILARITY = (("", "None Selected"),
               ("very different", "very different"),
               ("different", "different"),
-              ("unsure","unsure"),
+              ("somewhat different","somewhat different"),
               ("similar", "similar"),
               ("very similar", "very similar"))
 
@@ -124,6 +124,13 @@ class ParticipantQuestions(forms.Form):
         required=False
     )
 
+    religious_knowledge = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        choices=YES_NO,
+        label="Do you know what GHC's core religious beliefs are?",
+        required=False
+    )
+
     religious_similarity = forms.ChoiceField(
         widget=forms.Select(attrs={'class': 'form-control'}),
         choices=SIMILARITY,
@@ -176,6 +183,7 @@ class FollowUpQuestions(forms.Form):
         required=False
     )
 
+
 class ContactInfo(forms.Form):
 
     contact_type = forms.ChoiceField(
@@ -189,4 +197,13 @@ class ContactInfo(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control'}),
         max_length=50,
         required=False
+    )
+
+
+class Notes(forms.Form):
+    notes = forms.CharField(
+        widget=forms.Textarea(attrs={'class':'form-control'}),
+        label="Notes",
+        required=False,
+        max_length=500
     )

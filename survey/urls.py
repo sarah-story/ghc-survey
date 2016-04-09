@@ -5,15 +5,12 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'survey.views.home', name='home'),
-    # url(r'^survey/', include('survey.foo.urls')),
-
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'questions.views.index', name='index'),
     url(r'^survey/$', 'questions.views.index', name='index'),
     url(r'^survey/address', 'questions.views.address_visited', name='address_visited'),
     url(r'^survey/status', 'questions.views.status', name='status'),
@@ -21,5 +18,6 @@ urlpatterns = patterns('',
     url(r'^survey/done', 'questions.views.done', name='done'),
     url(r'^survey/3', 'questions.views.page_three', name='page_three'),
     url(r'^survey/contact', 'questions.views.contact', name='contact'),
+    url(r'^survey/notes', 'questions.views.notes', name='notes'),
     url(r'^survey/complete', 'questions.views.success', name="success")
 )

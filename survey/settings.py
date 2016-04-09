@@ -1,29 +1,35 @@
 # Django settings for survey project.
 
 import os
+import dj_database_url
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 APPEND_SLASH=False
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Sean', 'sean.j.story@gmail.com'),
 )
 
 MANAGERS = ADMINS
 
-BASE_DIR = '../'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+# Parse database configuration from $DATABASE_URL
+DATABASES['default'] =  dj_database_url.config(default='postgres://sstory@localhost/ghc')
+
+# Enable Persistent Connections
+DATABASES['default']['CONN_MAX_AGE'] = 500
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.4/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "thawing-everglades-78244.herokuapp.com"]
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -61,18 +67,37 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
-# Additional locations of static files
+# Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_ROOT, 'static'),
 )
+
+
+# STATIC_ROOT = 'staticfiles'
+# STATIC_URL = '/static/'
+#
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+# # URL prefix for static files.
+# # Example: "http://media.lawrence.com/static/"
+# STATIC_URL = '/static/'
+#
+# # Additional locations of static files
+# STATICFILES_DIRS = (
+#     # Put strings here, like "/home/html/static" or "C:/www/django/static".
+#     # Always use forward slashes, even on Windows.
+#     # Don't forget to use absolute paths, not relative paths.
+# )
 
 # List of finder classes that know how to find static files in
 # various locations.

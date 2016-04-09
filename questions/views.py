@@ -74,6 +74,7 @@ def page_two(request):
                 person.ghc_involvement = data['ghc_involvement'] or ""
                 person.target_involvement = data['desired_involvement'] or ""
                 person.want_community_events = data['community_event_interest'] or ""
+                person.religious_knowledge = data['religious_knowledge'] or ""
                 person.religious_similarity = data['religious_similarity'] or ""
                 person.religion = data['religious_identification'] or ""
                 person.age_range = data['age_range'] or ""
@@ -110,11 +111,11 @@ def page_three(request):
                 person.followup = data['follow_up'] or ""
                 person.witnessed_to = data['witnessed_to'] or ""
                 person.save()
-
+                request.session['current_person'] = person
                 if person.followup == "yes" and person.witnessed_to == "later":
                     return redirect('contact')
                 else:
-                    return redirect('success')
+                    return redirect('notes')
         else:
             form = forms.FollowUpQuestions()
         return render(request, 'page_three.html', {
@@ -134,11 +135,32 @@ def contact(request):
                 person.contact_info = data['contact_info'] or ""
                 person.contact_type = data['contact_type'] or ""
                 person.save()
-                return redirect('success')
+                request.session['current_person'] = person
+                return redirect('notes')
 
         else:
             form = forms.ContactInfo
         return render(request, 'contact_info.html', {
+            'form': form,
+        })
+
+
+def notes(request):
+    person = request.session.get('current_person', None)
+    if person is None:
+        return redirect("index")
+    else:
+        if request.method == 'POST':
+            form = forms.Notes(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                person.notes = data['notes'] or ""
+                person.save()
+                request.session['current_person'] = person
+                return redirect('success')
+        else:
+            form = forms.Notes
+        return render(request, 'notes.html', {
             'form': form,
         })
 

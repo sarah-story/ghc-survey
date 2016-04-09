@@ -8,7 +8,7 @@ To launch,
 pip install -r requirements.txt
 python manage.py syncdb
 python manage.py sql questions
-python mange.py syncdb
+python manage.py syncdb
 python manage.py runserver
 ```
 
